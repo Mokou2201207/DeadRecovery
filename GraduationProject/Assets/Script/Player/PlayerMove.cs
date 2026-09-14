@@ -14,8 +14,8 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {  
         // キーボード入力の取得
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
 
         //シフトキーを押しているかどうかで、移動速度を変化
         float currentSpeed=Input.GetKey(KeyCode.LeftShift)?runSpeed:moveSpeed;
