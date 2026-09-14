@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /// <summary>
 /// プレイヤー視点判定
 /// </summary>
@@ -11,6 +12,9 @@ public class PlayerLook : MonoBehaviour
 
     [Header("Playerが届くRayの距離")]
     [SerializeField] private float rayDistance = 100.0f;
+
+    [Header("クロスヘアの下のText")]
+    [SerializeField] private Text crosshairText;
 
     // Update is called once per frame
     void Update()
@@ -31,7 +35,7 @@ public class PlayerLook : MonoBehaviour
             //Tag付きがヒットしたら
             if (hit.collider.CompareTag("GarageDoor"))
             {
-                Debug.Log(111);
+                crosshairText.text = "E ステージへ移動";
                 //Eキーを押したらステージへ移行
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -42,6 +46,11 @@ public class PlayerLook : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                crosshairText.text = "";
+            }
         }
+
     }
 }
