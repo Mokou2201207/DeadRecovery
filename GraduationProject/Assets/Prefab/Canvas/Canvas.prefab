@@ -5249,7 +5249,7 @@ GameObject:
   - component: {fileID: 41260044866231220}
   - component: {fileID: 1558898320872586473}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: CrosshairText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

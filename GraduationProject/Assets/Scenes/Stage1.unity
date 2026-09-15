@@ -862,11 +862,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 918468013}
-    - target: {fileID: 8783592160384572038, guid: 799aad07603a4ce4a973afa4f068e98b,
-        type: 3}
-      propertyPath: m_Name
-      value: CrosshairText
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
