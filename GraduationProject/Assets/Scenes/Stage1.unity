@@ -671,14 +671,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6157841316138502046, guid: de01a0c1a96855142b53949d80ce0f89,
+        type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1705354739}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3956226039233581399, guid: de01a0c1a96855142b53949d80ce0f89,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953090719}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de01a0c1a96855142b53949d80ce0f89, type: 3}
 --- !u!4 &953090717 stripped
 Transform:
@@ -686,27 +687,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 953090716}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &953090718 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3956226039233581399, guid: de01a0c1a96855142b53949d80ce0f89,
-    type: 3}
-  m_PrefabInstance: {fileID: 953090716}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &953090719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953090718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f25fd7a85f522548b063f6b9ebf725c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 5184968764595356834, guid: 04b6c60d53505044baf758c3c4a80228,
-    type: 3}
-  spawnPoint: {fileID: 1705354739}
 --- !u!1 &1055603704
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,46 +959,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1413477509}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1806852811 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5215694509058963712, guid: 0bce43506d4312a4bb22aa62d1f3100a,
-    type: 3}
-  m_PrefabInstance: {fileID: 2254241196245988282}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1806852812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9159136424542920887, guid: 0bce43506d4312a4bb22aa62d1f3100a,
     type: 3}
   m_PrefabInstance: {fileID: 2254241196245988282}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1806852813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806852811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a48f29210ee324ca046b2f7316aa92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  humans:
-  - {fileID: 3191221269693405097, guid: 3c417bb6ee683a24aa7324f6f3dba855, type: 3}
-  - {fileID: 6692616704207584778, guid: 9f89b9b4f205cd748aede1cfa15babb7, type: 3}
-  - {fileID: 9105820456186756958, guid: d6157c6e5684c974197e5bef76586f85, type: 3}
-  - {fileID: 1046446337790263506, guid: bc40799847224d447b58e18b2434546c, type: 3}
-  spawnList:
-  - dataName: "\u5BB6\uFF11"
-    spawnPoints:
-    - {fileID: 1252157773}
-    - {fileID: 1316642761}
-    - {fileID: 916899822}
-    - {fileID: 766911802}
-    corpseCount: 3
-  - dataName: 
-    spawnPoints: []
-    corpseCount: 0
 --- !u!1001 &1898473841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1295,6 +1241,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: CorpseSpawnManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7115288478176893302, guid: 0bce43506d4312a4bb22aa62d1f3100a,
+        type: 3}
+      propertyPath: spawnList.Array.data[0].spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1252157773}
+    - target: {fileID: 7115288478176893302, guid: 0bce43506d4312a4bb22aa62d1f3100a,
+        type: 3}
+      propertyPath: spawnList.Array.data[0].spawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1316642761}
+    - target: {fileID: 7115288478176893302, guid: 0bce43506d4312a4bb22aa62d1f3100a,
+        type: 3}
+      propertyPath: spawnList.Array.data[0].spawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 916899822}
+    - target: {fileID: 7115288478176893302, guid: 0bce43506d4312a4bb22aa62d1f3100a,
+        type: 3}
+      propertyPath: spawnList.Array.data[0].spawnPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 766911802}
     - target: {fileID: 9159136424542920887, guid: 0bce43506d4312a4bb22aa62d1f3100a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1348,11 +1314,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5215694509058963712, guid: 0bce43506d4312a4bb22aa62d1f3100a,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1806852813}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bce43506d4312a4bb22aa62d1f3100a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

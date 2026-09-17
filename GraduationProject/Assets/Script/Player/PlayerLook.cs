@@ -70,6 +70,17 @@ public class PlayerLook : MonoBehaviour
                     }
                 }
             }
+
+            //ƒŒƒCƒ„[‚Å”»’è
+            int humanLayer = LayerMask.NameToLayer("Human");
+            if (hit.collider.gameObject.layer == humanLayer)
+            {
+                crosshairText.text = "€‘Ì‚ğ‚Â";
+                if (Input.GetMouseButtonDown(0))
+                {
+                    // €‘Ì‚ğ‚Âˆ—
+                }
+            }
         }
 
     }
