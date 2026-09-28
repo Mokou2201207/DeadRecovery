@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GarageDoor
   - Human
+  - LeftShoulder
+  - RightShoulder
   layers:
   - Default
   - TransparentFX

@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// ƒvƒŒƒCƒ„[‹“_”»’è
+/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¦–ç‚¹åˆ¤å®š
 /// </summary>
 public class PlayerLook : MonoBehaviour
 {
-    [Header("ƒJƒƒ‰İ’è")]
+    [Header("ã‚«ãƒ¡ãƒ©è¨­å®š")]
     [SerializeField] private Transform playerCamera;
 
-    [Header("Player‚ª“Í‚­Ray‚Ì‹——£")]
+    [Header("PlayerãŒå±ŠãRayã®è·é›¢")]
     [SerializeField] private float rayDistance = 100.0f;
 
-    [Header("ƒNƒƒXƒwƒA‚Ì‰º‚ÌText")]
+    [Header("ã‚¯ãƒ­ã‚¹ãƒ˜ã‚¢ã®ä¸‹ã®Text")]
     [SerializeField] private Text crosshairText;
 
     void Start()
     {
-        //ƒIƒuƒWƒFƒNƒg–¼‚Å©“®ƒAƒ^ƒbƒ`
+        //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã§è‡ªå‹•ã‚¢ã‚¿ãƒƒãƒ
         if (crosshairText == null)
         {
             GameObject textObj = GameObject.Find("CrosshairText");
@@ -30,7 +30,7 @@ public class PlayerLook : MonoBehaviour
 
             if (crosshairText == null)
             {
-                Debug.LogWarning("ƒNƒƒXƒwƒA—p‚ÌƒeƒLƒXƒg‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½I");
+                Debug.LogWarning("ã‚¯ãƒ­ã‚¹ãƒ˜ã‚¢ç”¨ã®ãƒ†ã‚­ã‚¹ãƒˆãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸï¼");
             }
         }
     }
@@ -38,7 +38,7 @@ public class PlayerLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ƒJƒƒ‰‚ªİ’è‚³‚ê‚Ä‚È‚©‚Á‚½‚ç‰½‚àˆ—‚µ‚È‚¢
+        //ã‚«ãƒ¡ãƒ©ãŒè¨­å®šã•ã‚Œã¦ãªã‹ã£ãŸã‚‰ä½•ã‚‚å‡¦ç†ã—ãªã„
         if(playerCamera==null) return;
 
         if (crosshairText != null)
@@ -46,21 +46,21 @@ public class PlayerLook : MonoBehaviour
             crosshairText.text = "";
         }
 
-        //ƒJƒƒ‰‚ÌŒü‚«‚ğŠî€‚ÅRay‚ğ‚Í‚é
+        //ã‚«ãƒ¡ãƒ©ã®å‘ãã‚’åŸºæº–ã§Rayã‚’ã¯ã‚‹
         Ray ray=playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
 
-        //ƒfƒoƒbƒO•`‰æ
+        //ãƒ‡ãƒãƒƒã‚°æç”»
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
 
-        //‚à‚µ‰½‚©‚Éƒqƒbƒg‚µ‚½‚çÀs
+        //ã‚‚ã—ä½•ã‹ã«ãƒ’ãƒƒãƒˆã—ãŸã‚‰å®Ÿè¡Œ
         RaycastHit hit;
         if(Physics.Raycast(ray,out hit, rayDistance))
         {
-            //Tag•t‚«‚ªƒqƒbƒg‚µ‚½‚ç
+            //Tagä»˜ããŒãƒ’ãƒƒãƒˆã—ãŸã‚‰
             if (hit.collider.CompareTag("GarageDoor"))
             {
-                crosshairText.text = "E ƒXƒe[ƒW‚ÖˆÚ“®";
-                //EƒL[‚ğ‰Ÿ‚µ‚½‚çƒXƒe[ƒW‚ÖˆÚs
+                crosshairText.text = "E ã‚¹ãƒ†ãƒ¼ã‚¸ã¸ç§»å‹•";
+                //Eã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰ã‚¹ãƒ†ãƒ¼ã‚¸ã¸ç§»è¡Œ
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     Teleport teleport=hit.collider.GetComponent<Teleport>();
@@ -71,14 +71,33 @@ public class PlayerLook : MonoBehaviour
                 }
             }
 
-            //ƒŒƒCƒ„[‚Å”»’è
+            //ãƒ¬ã‚¤ãƒ¤ãƒ¼ã§åˆ¤å®š
             int humanLayer = LayerMask.NameToLayer("Human");
             if (hit.collider.gameObject.layer == humanLayer)
             {
-                crosshairText.text = "€‘Ì‚ğ‚Â";
+                crosshairText.text = "æ­»ä½“ã‚’æŒã¤";
                 if (Input.GetMouseButtonDown(0))
                 {
-                    // €‘Ì‚ğ‚Âˆ—
+                    // PlayerGrabã¯æ­»ä½“(hit.collider)ã§ã¯ãªãã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è‡ªèº«ï¼ˆã¾ãŸã¯ã‚·ãƒ¼ãƒ³å†…ï¼‰ã«ã‚ã‚‹ãŸã‚ FindObjectOfType ç­‰ã§å–å¾—ã—ã¾ã™
+                    PlayerGrab playergrab = FindObjectOfType<PlayerGrab>();
+                    if (playergrab != null)
+                    {
+                      
+                    }
+                }
+            }
+
+            if (hit.collider.gameObject.layer == humanLayer)
+            {
+                crosshairText.text = "æ­»ä½“ã‚’æŒã¤";
+                if (Input.GetMouseButtonDown(1))
+                {
+                    // PlayerGrabã¯æ­»ä½“(hit.collider)ã§ã¯ãªãã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è‡ªèº«ï¼ˆã¾ãŸã¯ã‚·ãƒ¼ãƒ³å†…ï¼‰ã«ã‚ã‚‹ãŸã‚ FindObjectOfType ç­‰ã§å–å¾—ã—ã¾ã™
+                    PlayerGrab playergrab = FindObjectOfType<PlayerGrab>();
+                    if (playergrab != null)
+                    {
+                  
+                    }
                 }
             }
         }
