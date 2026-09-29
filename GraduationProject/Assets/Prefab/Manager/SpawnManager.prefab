@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2927324162585900669}
-  - component: {fileID: 6157841316138502046}
+  - component: {fileID: 6615589703237525511}
+  - component: {fileID: 684246500835366187}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6157841316138502046
+--- !u!114 &6615589703237525511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,3 +48,26 @@ MonoBehaviour:
   playerPrefab: {fileID: 5184968764595356834, guid: 04b6c60d53505044baf758c3c4a80228,
     type: 3}
   spawnPoint: {fileID: 0}
+--- !u!114 &684246500835366187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3956226039233581399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa50e72c30c07e942a410b5e9c49c41d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Customers:
+  - {fileID: 8514716638734019310, guid: 72fc8296970cd3b4d8704b4193771cef, type: 3}
+  - {fileID: 5981812336992009231, guid: 533b2fccd10967342b968a39fc09434a, type: 3}
+  - {fileID: 5981812336992009231, guid: 1c5aa0d2060efd44a977d4c8380be1aa, type: 3}
+  - {fileID: 6346753240026464964, guid: e99f6c07d81f65843957f8cf284c2e2b, type: 3}
+  - {fileID: 3311300021459427722, guid: d160067d084117242899a8877c260ef1, type: 3}
+  - {fileID: 8348744349585824750, guid: 896ce7943aa5f03469e527bb3780040c, type: 3}
+  m_RespawnPositions:
+  - {fileID: 0}
+  m_RespawnTime: 1
+  m_RespawnMaxTime: 40

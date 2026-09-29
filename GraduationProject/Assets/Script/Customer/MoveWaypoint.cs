@@ -3,104 +3,124 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
-/// NPC‚ÌˆÚ“®ƒvƒƒOƒ‰ƒ€
+/// NPCã®ç§»å‹•ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 /// </summary>
 public class MoveWaypoint : MonoBehaviour
 {
-    [Header("WaypointManager‚Ìscript‚ğ©“®ƒAƒ^ƒbƒ`"), SerializeField]
+    [Header("WaypointManagerã®scriptã‚’ã‚¢ã‚¿ãƒƒãƒ"), SerializeField]
     private WaypointManager m_Manager;
 
-    [Header("NavMeshAgent‚ğƒAƒ^ƒbƒ`"), SerializeField]
+    [Header("NavMeshAgentã‚’ã‚¢ã‚¿ãƒƒãƒ"), SerializeField]
     private NavMeshAgent m_agent;
 
-    [Header("‚Ç‚ÌWaypoint‚ÉŒü‚©‚Á‚Ä‚¢‚é‚©"), SerializeField]
+    [Header("ã©ã®Waypointã«å‘ã‹ã£ã¦ã„ã‚‹ã‹"), SerializeField]
     private int m_currentIndex = 0;
 
     /// <summary>
-    /// ŠJn
+    /// çµŒè·¯ãŒç¢ºå®šã—ã¦ç§»å‹•ä¸­ã‹ã©ã†ã‹
+    /// </summary>
+    private bool m_isMoving = false;
+
+    /// <summary>
+    /// é–‹å§‹
     /// </summary>
     [System.Obsolete]
     private void Start()
     {
-        //ƒ}ƒl[ƒWƒƒ‚ª–¢İ’è‚È‚ç‹ß‚­‚Ì‚à‚Ì‚ğ©“®’Tõ
+        //ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼è¨­å®šãªã‘ã‚Œã°æœ€ã‚‚è¿‘ã„ã‚‚ã®ã‚’æ¢ã™
         if (m_Manager == null)
         {
             m_Manager = FindClosestManager();
             if (m_Manager == null)
             {
-                Debug.LogError("WaypointManager‚ª“ü‚Á‚Ä‚Ü‚¹‚ñB");
+                Debug.LogError("WaypointManagerãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚");
             }
         }
 
-        //ƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        //ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå–å¾—
         m_agent = GetComponent<NavMeshAgent>();
 
-        ////Ÿ‚ÌPoint‚Ö
+        //æœ€åˆã®Pointã¸
         MoveToNextPoint();
     }
 
     /// <summary>
-    /// XV
+    /// æ›´æ–°
     /// </summary>
     private void Update()
     {
-            //NavMesh‚ª—LŒø‰»‚Ç‚¤‚©
-            if (m_agent.enabled)
+        //NavMeshãŒæœ‰åŠ¹ã‹ã©ã†ã‹
+        if (m_agent.enabled)
+        {
+            // ã¾ã çµŒè·¯è¨ˆç®—ä¸­ãªã‚‰ä½•ã‚‚ã—ãªã„
+            if (m_agent.pathPending)
+                return;
+
+            // çµŒè·¯ãŒç¢ºå®šã—ãŸã‚‰ãƒ•ãƒ©ã‚°ã‚’ON
+            if (!m_isMoving && m_agent.hasPath)
             {
-                //NavMeshAgent‚ª‚Ü‚¾Œo˜H‚ğŒvZ’†‚Å‚Í‚È‚­Œ»İ‚Ì–Ú“I’n‚É“’…‚µ‚½‚ç
-                if (!m_agent.pathPending && m_agent.remainingDistance < m_agent.stoppingDistance)
-                    //Ÿ‚ÌPoint‚Ö
-                    MoveToNextPoint();
+                m_isMoving = true;
             }
+
+            // ç§»å‹•ä¸­ã‹ã¤ç›®çš„åœ°ã«åˆ°ç€ã—ãŸã‚‰æ¬¡ã®Pointã¸
+            if (m_isMoving && m_agent.remainingDistance <= m_agent.stoppingDistance)
+            {
+                m_isMoving = false;
+                MoveToNextPoint();
+            }
+        }
     }
     /// <summary>
-    /// Point‚É‚Â‚¢‚½‚çŸ‚ÌPoint‚Ö
+    /// ç¾åœ¨ã®Pointã«ç€ã„ãŸã‚‰æ¬¡ã®Pointã¸
     /// </summary>
     void MoveToNextPoint()
     {
         if (m_Manager == null || m_Manager.m_Waypoints.Length == 0)
         {
-            Debug.Log("WaypointManager‚Ìscript‚ªŒ´ˆö‚Å‚·B");
+            Debug.Log("WaypointManagerã®scriptãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
             return;
         }
 
-        // ÅŒã‚Ì waypoint ‚É’…‚¢‚½‚©ƒ`ƒFƒbƒN
+        // æœ€å¾Œã® waypoint ã«åˆ°é”ãƒã‚§ãƒƒã‚¯
         if (m_currentIndex >= m_Manager.m_Waypoints.Length)
         {
-            // ©•ª‚ğíœ
+            // å‰Šé™¤
             Destroy(gameObject);
             return;
         }
 
-        // Ÿ‚ÌˆÚ“®ƒ|ƒCƒ“ƒg‚ğƒZƒbƒg
+        // æ¬¡ã®ç§»å‹•ãƒã‚¤ãƒ³ãƒˆã‚»ãƒƒãƒˆ
         m_agent.destination = m_Manager.m_Waypoints[m_currentIndex].position;
 
-        // Ÿ‚Ì index ‚Ö
+        // ãƒ•ãƒ©ã‚°ãƒªã‚»ãƒƒãƒˆï¼ˆçµŒè·¯è¨ˆç®—å¾…ã¡ï¼‰
+        m_isMoving = false;
+
+        // æ¬¡ã® index ã¸
         m_currentIndex++;
     }
     /// <summary>
-    /// ƒV[ƒ““à‚ÌWaypointManager‚Ì’†‚©‚çÅ‚à‹ß‚¢‚à‚ÌŒŸõ
+    /// ã‚·ãƒ¼ãƒ³å†…ã®WaypointManagerã®ä¸­ã§æœ€ã‚‚è¿‘ã„ã‚‚ã®ã‚’æ¢ã™
     /// </summary>
-    /// <returns>Å‚à‹ß‚¢WaypointManager</returns>
+    /// <returns>æœ€ã‚‚è¿‘ã„WaypointManager</returns>
     [System.Obsolete]
     WaypointManager FindClosestManager()
     {
-        //ƒV[ƒ“‚É‚ ‚é‘S‚Ä‚ÌWaypointManager‚ğŠl“¾
+        //ã‚·ãƒ¼ãƒ³ã«ã‚ã‚‹å…¨ã¦ã®WaypointManagerã‚’å–å¾—
         WaypointManager[] managers = FindObjectsOfType<WaypointManager>();
 
-        //Å‚à‹ß‚¢‚à‚Ì‚ğ•Û‘¶‚·‚é•¨
+        //æœ€ã‚‚è¿‘ã„ã‚‚ã®ã‚’ä¿å­˜ã™ã‚‹å¤‰æ•°
         WaypointManager closest = null;
 
-        //Å¬‹——£‚Ì‰Šú’l
+        //æœ€å°è·é›¢ã®åˆæœŸå€¤
         float minDist = Mathf.Infinity;
 
-        //Šl“¾‚µ‚½WaypointManager‚ğˆê‚Â‚¸‚Â’²‚×‚é
+        //å„WaypointManagerã‚’èª¿ã¹ã‚‹
         foreach (var m in managers)
         {
-            //‹——£‚ğŒvZ
+            //è·é›¢è¨ˆç®—
             float dist = Vector3.Distance(transform.position, m.transform.position);
 
-            //¡‚Ü‚Å‚æ‚è‚à‹ß‚¢‚à‚Ì‚ª‚ ‚ê‚ÎXV
+            //ä»Šã¾ã§ã§æœ€ã‚‚è¿‘ã„ã‚‚ã®ãªã‚‰æ›´æ–°
             if (dist < minDist)
             {
                 minDist = dist;
@@ -108,7 +128,7 @@ public class MoveWaypoint : MonoBehaviour
             }
         }
 
-        //ÅI“I‚É‹ß‚©‚Á‚½‚à‚Ì‚ğ‚¢‚ê‚é
+        //æœ€çµ‚çš„ã«æœ€ã‚‚è¿‘ã„ã‚‚ã®ã‚’è¿”ã™
         return closest;
     }
 }
