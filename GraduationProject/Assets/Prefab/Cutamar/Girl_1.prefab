@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Manager: {fileID: 0}
-  m_agent: {fileID: 0}
+  m_agent: {fileID: 4039498861088238659}
   m_currentIndex: 0
 --- !u!195 &4039498861088238659
 NavMeshAgent:
