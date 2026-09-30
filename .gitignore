@@ -8,3 +8,6 @@ UserSettings
 *.csproj
 *.sln
 GraduationProject/Assets/FlipGameDev/Terrain&GrassPack/Terrain_Settings/Data/Demo.asset
+GraduationProject/Assets/Assets/Map/MapProps/_URP/URP.unitypackage
+GraduationProject/Assets/Assets/Map/MapProps/_HDRP/HDRP.unitypackage
+GraduationProject/Bulid/GraduationProject_Data/sharedassets0.assets.resS

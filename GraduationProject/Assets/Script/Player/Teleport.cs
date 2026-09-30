@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 /// <summary>
-/// ƒeƒŒƒ|[ƒg‚·‚éˆ—
+/// ãƒ†ãƒ¬ãƒãƒ¼ãƒˆåˆ¶å¾¡
 /// </summary>
 public class Teleport : MonoBehaviour
 {
     /// <summary>
-    /// ƒƒr[‚©‚çƒXƒe[ƒW‚ÉƒeƒŒƒ|[ƒg‚·‚éˆ—
+    /// ãƒ­ãƒ“ãƒ¼ã‹ã‚‰ã‚¹ãƒ†ãƒ¼ã‚¸ã¸ãƒ†ãƒ¬ãƒãƒ¼ãƒˆ
     /// </summary>
     public void StageTeleport()
     {
-        Debug.Log("ƒƒr[‚©‚çƒXƒe[ƒW‚ÉˆÚ“®");
+        Debug.Log("ãƒ­ãƒ“ãƒ¼ã‹ã‚‰ã‚¹ãƒ†ãƒ¼ã‚¸ã¸ç§»å‹•");
         SceneManager.LoadScene("Stage1");
     }
 }

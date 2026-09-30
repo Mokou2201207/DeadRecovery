@@ -7,8 +7,7 @@
 // It can safely be removed; it's included only to improve the first-time
 // experience for users opening the asset in Unity 6.
 
-
-
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -52,3 +51,4 @@ namespace EzBake.Editor {
     }
     #endif
 }
+#endif
