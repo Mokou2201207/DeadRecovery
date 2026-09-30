@@ -2,26 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// NPC‚ÌˆÚ“®ƒ|ƒCƒ“ƒg‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// NPCã®ç§»å‹•ãƒã‚¤ãƒ³ãƒˆã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class WaypointManager : MonoBehaviour
 {
-    [Header("“G‚ÌˆÚ“®ƒ|ƒCƒ“ƒg‚ğ“±“ü")]
+    [Header("æ•µã®ç§»å‹•ãƒã‚¤ãƒ³ãƒˆã‚’å°å…¥")]
     public Transform[] m_Waypoints;
     /// <summary>
-    ///  qƒIƒuƒWƒFƒNƒg‚©‚çWaypoint‚ğ©“®“o˜^‚µ‚Ü‚·
+    ///  å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰Waypointã‚’è‡ªå‹•ç™»éŒ²ã—ã¾ã™
     /// </summary>
     void Awake()
     {
-        // qƒIƒuƒWƒFƒNƒg©“®“o˜^
+        // å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè‡ªå‹•ç™»éŒ²
         if (m_Waypoints == null || m_Waypoints.Length == 0)
         {
-            m_Waypoints = GetComponentsInChildren<Transform>();
-            Debug.Log("qƒIƒuƒWƒFƒNƒg‚©‚ç©“®‚ÅWaypoints‚ğ“o˜^‚µ‚Ü‚µ‚½B");
+            List<Transform> list = new List<Transform>();
+            foreach (Transform t in GetComponentsInChildren<Transform>())
+            {
+                if (t != transform)
+                {
+                    list.Add(t);
+                }
+            }
+            m_Waypoints = list.ToArray();
+            Debug.Log("å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰è‡ªå‹•ã§Waypointsã‚’ç™»éŒ²ã—ã¾ã—ãŸã€‚");
         }
         else
         {
-            Debug.Log("ƒCƒ“ƒXƒyƒNƒ^[‚ÅWaypoints‚ªè“®İ’è‚³‚ê‚Ä‚¢‚Ü‚·B");
+            Debug.Log("ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã§WaypointsãŒæ‰‹å‹•è¨­å®šã•ã‚Œã¦ã„ã¾ã™ã€‚");
         }
     }
 }

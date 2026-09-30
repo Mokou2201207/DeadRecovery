@@ -5,16 +5,19 @@ using UnityEngine;
 public class Respawn : MonoBehaviour
 {
     [Header("お客さんの種類"), SerializeField]
-    private GameObject[] m_Customers;
+    private GameObject[] customers;
 
     [Header("スポーンする位置"), SerializeField]
-    private Transform[] m_RespawnPositions;
+    private Transform[] respawnPositions;
 
     [Header("最低限のリスポーン時間"), SerializeField]
-    private float m_RespawnTime = 20;
+    private float respawnTime = 20;
 
     [Header("最大限のリスポーン時間"), SerializeField]
-    private float m_RespawnMaxTime = 40;
+    private float respawnMaxTime = 40;
+
+    [Header("お店に並べる最大人数"), SerializeField]
+    private int maxCustomer = 5;
     /// <summary>
     /// 開始
     /// </summary>
@@ -22,24 +25,44 @@ public class Respawn : MonoBehaviour
     {
         Spawn();
     }
+
     /// <summary>
     /// キャラクターの種類、スポーン位置、時間をランダムに設定してスポーン
     /// </summary>
+    [System.Obsolete]
     void Spawn()
     {
-        //ランダムのキャラを選ぶ
-        int randCustomer = Random.Range(0, m_Customers.Length);
-        GameObject customer = m_Customers[randCustomer];
+        //このシーンにいるお客さんの数を数える
+        MoveWaypoint[] activeCustomers = FindObjectsOfType<MoveWaypoint>();
+        if (activeCustomers.Length >= maxCustomer)
+        {
+            Debug.Log("お客さんがいっぱいで行列が満員のため、新しいお客さんは来ませんでした。");
+        }
+        else
+        {
+            //ランダムのキャラを選ぶ
+            int randCustomer = Random.Range(0, customers.Length);
+            GameObject customer = customers[randCustomer];
 
-        //ランダムのスポーンの位置選ぶ
-        int randPos = Random.Range(0, m_RespawnPositions.Length);
-        Transform spawnPos = m_RespawnPositions[randPos];
+            //ランダムのスポーンの位置選ぶ
+            int randPos = Random.Range(0, respawnPositions.Length);
+            Transform spawnPos = respawnPositions[randPos];
 
-        //その位置にスポーン
-        Instantiate(customer, spawnPos.position, spawnPos.rotation);
+            // その位置にスポーン
+            GameObject spawnedCustomer = Instantiate(customer, spawnPos.position, spawnPos.rotation);
+
+            // 生成したお客さんに「現在の列の何番目か」を教えてあげる
+            MoveWaypoint moveScript = spawnedCustomer.GetComponent<MoveWaypoint>();
+            if (moveScript != null)
+            {
+               // moveScript.SetQueuePosition(activeCustomers.Length);
+            }
+        }
 
         ////次のスポーンをランダムで時間を決める
-        float nextspown = Random.Range(m_RespawnTime, m_RespawnMaxTime);
+        float nextspown = Random.Range(respawnTime, respawnMaxTime);
         Invoke(nameof(Spawn), nextspown);
     }
+
 }
+
