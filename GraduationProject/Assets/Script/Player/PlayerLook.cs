@@ -68,11 +68,12 @@ public class PlayerLook : MonoBehaviour
                     // 1番目のお客さんでレジ停止中
                     if (hitCustomer.isStopped && hitCustomer.queuePositionNumber == 0)
                     {
-                        crosshairText.text = "会計 (左クリック)";
+                        crosshairText.text = "お宝を見せてもらう(左クリック)";
                         if (Input.GetMouseButtonDown(0))
                         {
+
                             // 会計完了処理を実行
-                            hitCustomer.FinishCheckout();
+                           // hitCustomer.FinishCheckout();
                         }
                     }
                 }

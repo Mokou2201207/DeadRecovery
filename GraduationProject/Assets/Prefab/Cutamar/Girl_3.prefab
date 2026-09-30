@@ -824,6 +824,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -7769447696766876625}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e0d0471b15fcc94d9329dbe9f844213,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4438797912674355699}
   m_SourcePrefab: {fileID: 100100000, guid: 0e0d0471b15fcc94d9329dbe9f844213, type: 3}
 --- !u!1 &5981812336992009231 stripped
 GameObject:
@@ -848,6 +852,8 @@ MonoBehaviour:
   currentIndex: 0
   stopIndex: 1
   stopDistanceToFrontCustomer: 0.5
+  queuePositionNumber: 0
+  isStopped: 0
 --- !u!195 &-9031671955343486065
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -893,3 +899,21 @@ CapsuleCollider:
   m_Height: 1.8183324
   m_Direction: 1
   m_Center: {x: -0.00000008940697, y: 0.88075316, z: -0.006549835}
+--- !u!114 &4438797912674355699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5981812336992009231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1c912e6c62c31438b196eb16df8201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemList:
+  - {fileID: 5744401535643898786, guid: 1b34e14a95d12e74d86b749ed42f1b1b, type: 3}
+  - {fileID: 4367424571762002097, guid: b5aa7d22818cfd443b09201733750085, type: 3}
+  - {fileID: 3149203889887882826, guid: 1b4489ed327095348abdac534f1f7575, type: 3}
+  - {fileID: 5671832282889584838, guid: ac1e11bdbaa417541808a0118686f74a, type: 3}
+  currentItem: {fileID: 0}
