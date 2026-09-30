@@ -60,14 +60,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa50e72c30c07e942a410b5e9c49c41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Customers:
+  customers:
   - {fileID: 8514716638734019310, guid: 72fc8296970cd3b4d8704b4193771cef, type: 3}
   - {fileID: 5981812336992009231, guid: 533b2fccd10967342b968a39fc09434a, type: 3}
   - {fileID: 5981812336992009231, guid: 1c5aa0d2060efd44a977d4c8380be1aa, type: 3}
   - {fileID: 6346753240026464964, guid: e99f6c07d81f65843957f8cf284c2e2b, type: 3}
   - {fileID: 3311300021459427722, guid: d160067d084117242899a8877c260ef1, type: 3}
   - {fileID: 8348744349585824750, guid: 896ce7943aa5f03469e527bb3780040c, type: 3}
-  m_RespawnPositions:
+  respawnPositions:
   - {fileID: 0}
-  m_RespawnTime: 1
-  m_RespawnMaxTime: 40
+  respawnTime: 1
+  respawnMaxTime: 10
+  maxCustomer: 5

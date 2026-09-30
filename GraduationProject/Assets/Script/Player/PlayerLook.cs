@@ -71,12 +71,32 @@ public class PlayerLook : MonoBehaviour
                         crosshairText.text = "お宝を見せてもらう(左クリック)";
                         if (Input.GetMouseButtonDown(0))
                         {
+                            //ヒットしたお客さんからItemDataを取得
+                            CustomerItem customerItemData =hit.collider.GetComponent<CustomerItem>();
 
+                            if (customerItemData != null && customerItemData.currentItem != null&&!customerItemData.isItemDropped)
+                            {
+                                //お宝を落としたフラグを立てる
+                                customerItemData.isItemDropped = true;
+
+                                // DropItemManager を通して、その客が持っているお宝を落とす
+                                if (DropItemManager.Instance != null)
+                                {
+                                    DropItemManager.Instance.DropItem(customerItemData.currentItem);
+                                }
+                            }
                             // 会計完了処理を実行
-                           // hitCustomer.FinishCheckout();
+                            // hitCustomer.FinishCheckout();
                         }
                     }
                 }
+            }
+
+            // ヒットオブジェクトにItemDataスクリプトがあるか確認
+            ItemData Treasure = hit.collider.GetComponent<ItemData>();
+            if (Treasure!=null && Treasure.itemTypeName== "TreasureType")
+            {
+                crosshairText.text = "鑑定(左クリック)";
             }
         }
     }
