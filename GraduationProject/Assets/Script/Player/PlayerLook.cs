@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// プレイヤー視点・インタラクション処理
+/// プレイヤー視点インタラクション（Raycast判定＆テキスト表示）
 /// </summary>
 public class PlayerLook : MonoBehaviour
 {
@@ -14,89 +14,156 @@ public class PlayerLook : MonoBehaviour
     [Header("Playerから出すRayの距離")]
     [SerializeField] private float rayDistance = 100.0f;
 
-    [Header("クロスヘアの横Text")]
+    [Header("クロスヘア用のText")]
     [SerializeField] private Text crosshairText;
+
+    private void Awake()
+    {
+        FindCrosshairText();
+    }
 
     void Start()
     {
-        // オブジェクトで自動アタッチ
-        if (crosshairText == null)
+        FindCrosshairText();
+
+        if (playerCamera == null && Camera.main != null)
         {
-            GameObject textObj = GameObject.Find("CrosshairText");
-
-            if (textObj != null)
-            {
-                crosshairText = textObj.GetComponent<Text>();
-            }
-
-            if (crosshairText == null)
-            {
-                Debug.LogWarning("クロスヘア用のテキストが見つかりません！");
-            }
+            playerCamera = Camera.main.transform;
         }
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// UIのCrosshairTextを自動検索
+    /// </summary>
+    private void FindCrosshairText()
+    {
+        if (crosshairText != null) return;
+
+        // 1. 名前 "CrosshairText" で検索
+        GameObject textObj = GameObject.Find("CrosshairText");
+        if (textObj != null)
+        {
+            crosshairText = textObj.GetComponent<Text>();
+        }
+
+        // 2. 見つからなければ Canvas 内の Text を自動検索
+        if (crosshairText == null)
+        {
+            Text[] allTexts = FindObjectsOfType<Text>(true);
+            foreach (var t in allTexts)
+            {
+                if (t.name.ToLower().Contains("crosshair") || t.name.ToLower().Contains("interact") || t.name.ToLower().Contains("aim") || t.name.ToLower().Contains("text"))
+                {
+                    crosshairText = t;
+                    break;
+                }
+            }
+            if (crosshairText == null && allTexts.Length > 0)
+            {
+                crosshairText = allTexts[0];
+            }
+        }
+
+        if (crosshairText == null)
+        {
+            Debug.LogWarning("[PlayerLook] クロスヘア用のTextが見つかりません。Canvas内にTextを作成し名前を 'CrosshairText' にするか、Inspectorでアタッチしてください。");
+        }
+    }
+
     void Update()
     {
-        // カメラ設定されていなければ何もしない
-        if (playerCamera == null) return;
+        // 鑑定中ならRayキャスト処理およびテキスト表示をスキップ
+        if (InspectionManager.Instance != null && InspectionManager.Instance.IsInspecting)
+        {
+            if (crosshairText != null) crosshairText.text = "";
+            return;
+        }
 
+        // カメラが未設定の場合、MainCameraを自動取得
+        if (playerCamera == null)
+        {
+            if (Camera.main != null) playerCamera = Camera.main.transform;
+            else return;
+        }
+
+        // 毎フレームのテキスト表示を初期化
         if (crosshairText != null)
         {
             crosshairText.text = "";
         }
+        else
+        {
+            FindCrosshairText();
+        }
 
-        // カメラの視線基準でRayを飛ばす
-        Ray ray = playerCamera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-
-        // デバッグ描画
+        // カメラ位置から前方へRayを射出
+        Ray ray = new Ray(playerCamera.position, playerCamera.forward);
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
 
-        // Ray判定
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, rayDistance))
         {
-            // レイアー判定
-            int CustomerLayer = LayerMask.NameToLayer("Customer");
-            if (hit.collider.gameObject.layer == CustomerLayer)
+            // 1. お客さん（Customer）判定
+            int customerLayer = LayerMask.NameToLayer("Customer");
+            if (customerLayer != -1 && hit.collider.gameObject.layer == customerLayer)
             {
-                // ヒットオブジェクトにMoveWaypointスクリプトがあるか確認
-                MoveWaypoint hitCustomer = hit.collider.GetComponent<MoveWaypoint>();
-                if (hitCustomer != null)
+                MoveWaypoint hitCustomer = hit.collider.GetComponentInParent<MoveWaypoint>();
+                if (hitCustomer != null && hitCustomer.isStopped && hitCustomer.queuePositionNumber == 0)
                 {
-                    // 1番目のお客さんでレジ停止中
-                    if (hitCustomer.isStopped && hitCustomer.queuePositionNumber == 0)
+                    if (crosshairText != null)
                     {
                         crosshairText.text = "お宝を見せてもらう(左クリック)";
-                        if (Input.GetMouseButtonDown(0))
+                    }
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        CustomerItem customerItemData = hit.collider.GetComponentInParent<CustomerItem>();
+                        if (customerItemData != null && customerItemData.currentItem != null && !customerItemData.isItemDropped)
                         {
-                            //ヒットしたお客さんからItemDataを取得
-                            CustomerItem customerItemData =hit.collider.GetComponent<CustomerItem>();
+                            customerItemData.isItemDropped = true;
 
-                            if (customerItemData != null && customerItemData.currentItem != null&&!customerItemData.isItemDropped)
+                            // DropItemManager 経由でお宝をドロップ
+                            if (DropItemManager.Instance != null)
                             {
-                                //お宝を落としたフラグを立てる
-                                customerItemData.isItemDropped = true;
-
-                                // DropItemManager を通して、その客が持っているお宝を落とす
-                                if (DropItemManager.Instance != null)
-                                {
-                                    DropItemManager.Instance.DropItem(customerItemData.currentItem);
-                                }
+                                DropItemManager.Instance.DropItem(customerItemData.currentItem);
                             }
-                            // 会計完了処理を実行
-                            // hitCustomer.FinishCheckout();
                         }
                     }
+                    return;
                 }
             }
 
-            // ヒットオブジェクトにItemDataスクリプトがあるか確認
-            ItemData Treasure = hit.collider.GetComponent<ItemData>();
-            if (Treasure!=null && Treasure.itemTypeName== "TreasureType")
+            // 2. お宝（ItemData）判定：親・自身・子から柔軟に検索
+            ItemData treasure = hit.collider.GetComponent<ItemData>();
+            if (treasure == null) treasure = hit.collider.GetComponentInParent<ItemData>();
+            if (treasure == null) treasure = hit.collider.GetComponentInChildren<ItemData>();
+
+            // ItemDataコンポーネントが存在するか、またはオブジェクト名にお宝関連キーワードが含まれる場合（未定義タグエラー回避）
+            string objName = hit.collider.gameObject.name.ToLower();
+            bool isTreasureItem = (treasure != null) ||
+                                  objName.Contains("treasure") ||
+                                  objName.Contains("item") ||
+                                  objName.Contains("otakara");
+
+            if (isTreasureItem)
             {
-                crosshairText.text = "鑑定(左クリック)";
+                if (crosshairText != null)
+                {
+                    crosshairText.text = "鑑定(左クリック)";
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (InspectionManager.Instance != null)
+                    {
+                        GameObject inspectTarget = (treasure != null) ? treasure.gameObject : hit.collider.gameObject;
+                        InspectionManager.Instance.StartInspection(inspectTarget);
+                    }
+                    else
+                    {
+                        Debug.LogError("[PlayerLook] InspectionManager.Instance が見つかりません。シーン内に InspectionManager を配置してください。");
+                    }
+                }
             }
         }
     }
